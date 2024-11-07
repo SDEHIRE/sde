@@ -106,7 +106,7 @@ const Hero = () => {
         <div
           className="absolute inset-0 opacity-20 bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/hero-ivS7f1SSSNR2QGjLkFq5l3p4tdTAWi.jpeg')`,
+            backgroundImage: `url('/Landing/hero.jpeg')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}

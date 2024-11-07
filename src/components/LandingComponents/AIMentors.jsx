@@ -157,7 +157,7 @@ const AIMentors = () => {
     {
       name: "Steve",
       role: "Your Coding Companion",
-      avatar: "/steve.jpg",
+      avatar: "/Landing/steve.jpg",
       description: "Steve provides real-time hints, personalized feedback, and topic recommendations as you work through coding challenges. He adapts to your learning style and helps you improve your skills efficiently.",
       skills: ["Python", "Data Structures", "Algorithms"],
       icon: Code
@@ -165,7 +165,7 @@ const AIMentors = () => {
     {
       name: "Lisa",
       role: "Your Interview Coach",
-      avatar: "/lisa.jpeg",
+      avatar: "/Landing/lisa.jpeg",
       description: "Lisa simulates real-life interviewers, adapting questions and behavior based on your responses. She provides a challenging and realistic interview experience to prepare you for high-stakes technical interviews.",
       skills: ["Behavioral Questions", "Technical Interviews", "Problem Solving", "Communication Skills", "Stress Management"],
       icon: Brain

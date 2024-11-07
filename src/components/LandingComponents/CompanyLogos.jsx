@@ -13,12 +13,12 @@ const CompanyLogos = () => {
   }, [isInView, controls]);
 
   const logos = [
-    { id: 1, name: 'Meta', src: '/Meta.png' },
-    { id: 2, name: 'Netflix', src: '/netflix.png' },
-    { id: 3, name: 'Microsoft', src: '/Microsoft.png' },
-    { id: 4, name: 'Adobe', src: '/Adobe.png' },
-    { id: 5, name: 'Apple', src: '/Apple.png' },
-    { id: 6, name: 'Facebook', src: '/Facebook.png' },
+    { id: 1, name: 'Meta', src: '/CompanyLogos/Meta.png' },
+    { id: 2, name: 'Netflix', src: '/CompanyLogos/netflix.png' },
+    { id: 3, name: 'Microsoft', src: '/CompanyLogos/Microsoft.png' },
+    { id: 4, name: 'Adobe', src: '/CompanyLogos/Adobe.png' },
+    { id: 5, name: 'Apple', src: '/CompanyLogos/Apple.png' },
+    { id: 6, name: 'Facebook', src: '/CompanyLogos/Facebook.png' },
   ];
 
   const containerVariants = {

@@ -1,13 +1,13 @@
 import React from 'react'
-import Header from './Header'
-import Hero from './Hero'
-import CompanyLogos from './CompanyLogos'
-import Features from './Features'
-import AIMentors from './AIMentors'
-import Services from './Services'
-import Testimonials from './Testimonials'
-import GetStarted from './GetStarted'
-import Footer from './Footer'
+import Header from './LandingComponents/Header'
+import Hero from './LandingComponents/Hero'
+import CompanyLogos from './LandingComponents/CompanyLogos'
+import Features from './LandingComponents/Features'
+import AIMentors from './LandingComponents/AIMentors'
+import Services from './LandingComponents/Services'
+import Testimonials from './LandingComponents/Testimonials'
+import GetStarted from './LandingComponents/GetStarted'
+import Footer from './LandingComponents/Footer'
 
 
 

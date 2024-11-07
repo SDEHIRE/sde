@@ -5,9 +5,9 @@ export default function Footer() {
   return (
     <footer className="w-full py-6 bg-gray-800/90 text-white relative">
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-60"
+        className="absolute inset-0 bg-cover bg-center opacity-25"
         style={{
-          backgroundImage: "url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/footerjpeg-UGRD2otDK8APqLczEnkak4ONz2cZY4.jpeg')",
+          backgroundImage: "url('/Landing/footer.jpeg')",
           backgroundPosition: "center 25%"
         }}
       ></div>
