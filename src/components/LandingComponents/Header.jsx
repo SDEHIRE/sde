@@ -119,8 +119,8 @@ const Header = () => {
         </div>
         <nav className="hidden md:flex items-center space-x-4" ref={dropdownRef}>
           <DropdownNavItem trigger="Products" id="products">
+            <NavItem href="/Sdehire-pro-landing">SDE Hire Pro</NavItem>
             <NavItem href="https://sdehire.in/freshman/login/index.php">SDE Hire Freshmen</NavItem>
-            <NavItem href="https://sdehire.in/pro/sdelogin.html">SDE Hire Pro</NavItem>
           </DropdownNavItem>
           <DropdownNavItem trigger="Services" id="services">
             <NavItem href="/certify-me">CertifyMe</NavItem>
@@ -138,7 +138,7 @@ const Header = () => {
           <Button variant="outline">
             Request Demo
           </Button>
-          <Button href="#explore">
+          <Button href="/explore">
             Explore
           </Button>
         </nav>
