@@ -123,17 +123,17 @@ const Header = () => {
             <NavItem href="https://sdehire.in/freshman/login/index.php">SDE Hire Freshmen</NavItem>
           </DropdownNavItem>
           <DropdownNavItem trigger="Services" id="services">
-            <NavItem href="/certify-me">CertifyMe</NavItem>
-            <NavItem href="/next-step">NextStep</NavItem>
+            <NavItem href="/ComingSoon">CertifyMe</NavItem>
+            <NavItem href="/ComingSoon">NextStep</NavItem>
           </DropdownNavItem>
           <NavItem href="/events">Events</NavItem>
           <DropdownNavItem trigger="Partners" id="partners">
-            <NavItem href="/university-collaborations">University Collaborations</NavItem>
-            <NavItem href="/student-engagement">Student Engagement Programs</NavItem>
-            <NavItem href="/academic-partnerships">Academic Partnerships</NavItem>
-            <NavItem href="/industry-partnerships">Industry Partnerships</NavItem>
-            <NavItem href="/corporate-training">Corporate Training Programs</NavItem>
-            <NavItem href="/recruitment-opportunities">Recruitment Opportunities</NavItem>
+            <NavItem href="/ComingSoon">University Collaborations</NavItem>
+            <NavItem href="/ComingSoon">Student Engagement Programs</NavItem>
+            <NavItem href="/ComingSoon">Academic Partnerships</NavItem>
+            <NavItem href="/ComingSoon">Industry Partnerships</NavItem>
+            <NavItem href="/ComingSoon">Corporate Training Programs</NavItem>
+            <NavItem href="/ComingSoon">Recruitment Opportunities</NavItem>
           </DropdownNavItem>
           <Button variant="outline">
             Request Demo

@@ -5,6 +5,7 @@ import ExplorePage from "./components/ExplorePage"
 import ProLanding from "./components/ProLandingPage"
 import StudentLogin from "./components/student-login"
 import CompanyLogin from "./components/recruiter-login"
+import ComingSoon from "./components/ComingSoon.jsx"
 
 
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Sdehire-pro-landing" element={<ProLanding />} />
         <Route path="/Sdehire-pro-Student-login" element={<StudentLogin />} />
         <Route path="/Sdehire-pro-Company-login" element={<CompanyLogin/>} />
+        <Route path="/ComingSoon" element={<ComingSoon/>} />
 
 
 
