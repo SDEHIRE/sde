@@ -135,7 +135,7 @@ const Header = () => {
             <NavItem href="/ComingSoon">Corporate Training Programs</NavItem>
             <NavItem href="/ComingSoon">Recruitment Opportunities</NavItem>
           </DropdownNavItem>
-          <Button variant="outline">
+          <Button href="/RequestDemo" variant="outline">
             Request Demo
           </Button>
           <Button href="/explore">
