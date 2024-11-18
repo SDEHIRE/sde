@@ -271,7 +271,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
       };
   
       // Send the code and test cases to the evaluation API
-      const evaluationResponse = await axios.post('http://localhost:5009/api/evaluate', evaluatePayload);
+      const evaluationResponse = await axios.post('https://backendexpress-mi00.onrender.com/api/evaluate', evaluatePayload);
       const evaluationResults = evaluationResponse.data.results;
       const totalPassed = evaluationResponse.data.totalPassed;
   
@@ -352,7 +352,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
   
     try {
       // Fetch a random question from the backend
-      const response = await axios.get('http://localhost:5009/api/question');
+      const response = await axios.get('https://backendexpress-mi00.onrender.com/api/question');
       const questionData = response.data;
   
       // Log the fetched question for debugging
@@ -410,7 +410,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
   const handleSubmitCode = async () => {
     if (userCode.trim().split('\n').length > 0) {
       try {
-        const response = await axios.post('http://localhost:5009/compile_code', {
+        const response = await axios.post('https://backendexpress-mi00.onrender.com/compile_code', {
           code: userCode,
 
         })
