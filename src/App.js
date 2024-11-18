@@ -8,6 +8,11 @@ import CompanyLogin from "./components/recruiter-login"
 import ComingSoon from "./components/TempPages/ComingSoon"
 import EventsPage from "./components/TempPages/events"
 import RequestDemo from "./components/TempPages/RequestDemo"
+import Session from "./components/session-report"
+import ProfilePage from "./components/profilepage"
+import Practice from "./components/practice"
+
+
 
 
 function App() {
@@ -22,6 +27,10 @@ function App() {
         <Route path="/ComingSoon" element={<ComingSoon/>} />
         <Route path="/events" element={<EventsPage/>} />
         <Route path="/RequestDemo" element={<RequestDemo/>} />
+        <Route path="/landing" element={<Practice/>} />
+        <Route path="/ProfilePage" element={<ProfilePage/>} />
+        <Route path="/SessionReport" element={<Session/>}/>
+        <Route path="/profile" element={<ProfilePage />} />
 
 
 
