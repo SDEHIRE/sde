@@ -426,11 +426,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
     }
   }
 
-  useEffect(() => {
-    if (userCode.trim().split('\n').length >= 2) {
-      handleGenerateQuestion()
-    }
-  }, [userCode])
+  
 
   const handleHintClick = (hint) => {
     if (hint) {
