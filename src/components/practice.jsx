@@ -311,6 +311,9 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
       setLoading(false);
     }
   };
+
+  
+  
   
 
 
@@ -535,12 +538,12 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
                 </div>
                 <div className="video-container">
   <video id="video1" className="w-full h-40 object-cover rounded-lg" autoPlay muted loop>
-    <source src="personalised.mp4" type="video/mp4" />
+    <source src="lisa.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 
   <video id="video2" className="w-full h-40 object-cover rounded-lg" autoPlay muted loop style={{ display: 'none' }}>
-    <source src="interview.mp4" type="video/mp4" />
+    <source src="l2.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
 </div>

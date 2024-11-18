@@ -1,210 +1,202 @@
-import React, { useState } from 'react'
-import axios from 'axios'
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from 'recharts'
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
-const api = axios.create({
-  baseURL: 'http://localhost:5001', // Your backend URL
-})
+const COLORS = ['#3B82F6', '#1D4ED8']; // Blue shades
 
-export default function SessionReport() {
-  const [reportData, setReportData] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
-  const [reportGenerated, setReportGenerated] = useState(false)
+const SessionReport = () => {
+  const location = useLocation();
+  const sessionData = location.state || {};
+  const { evaluationResults, totalPassed, nextQuestion, userCode } = sessionData;
 
-  const fetchReportData = async () => {
-    setLoading(true)
-    setError(null)
-    setReportGenerated(false)
+  const [codeAnalysis, setCodeAnalysis] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    try {
-      const response = await api.get('/get_report')
-      setReportData(response.data)
-      setReportGenerated(true)
-      alert(`Report Data Loaded: ${JSON.stringify(response.data, null, 2)}`)
-    } catch (err) {
-      setError('Failed to load report data.')
-      alert("Failed to load report data. Please try again.")
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    const fetchCodeAnalysis = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await axios.post('https://codeana.onrender.com/analyze_code', { code: userCode });
+        setCodeAnalysis(response.data);
+      } catch (err) {
+        setError('Failed to fetch code analysis');
+        console.error('Error fetching code analysis:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (userCode) {
+      fetchCodeAnalysis();
     }
-  }
+  }, [userCode]);
 
-  const facialEmotionsData = [
-    { emotion: 'Happy', score: Math.random() * 100 },
-    { emotion: 'Sad', score: Math.random() * 100 },
-    { emotion: 'Angry', score: Math.random() * 100 },
-    { emotion: 'Fear', score: Math.random() * 100 },
-    { emotion: 'Surprise', score: Math.random() * 100 },
-  ]
+  const reportData = {
+    facialEmotions: [
+      { emotion: "Happy", score: 75 },
+      { emotion: "Sad", score: 25 },
+      { emotion: "Angry", score: 10 },
+      { emotion: "Fear", score: 5 },
+      { emotion: "Surprise", score: 40 },
+    ],
+    audioAnalysis: [
+      { attribute: "Clarity", score: 8 },
+      { attribute: "Volume", score: 7 },
+      { attribute: "Speed", score: 6 },
+      { attribute: "Tone", score: 9 },
+    ],
+    testCaseValidation: [
+      { name: "Validated", value: totalPassed || 0 },
+      { name: "Not Validated", value: (evaluationResults?.length || 0) - (totalPassed || 0) },
+    ],
+  };
 
-  const audioAnalysisData = [
-    { attribute: 'Clarity', score: Math.random() * 10 },
-    { attribute: 'Volume', score: Math.random() * 10 },
-    { attribute: 'Speed', score: Math.random() * 10 },
-    { attribute: 'Tone', score: Math.random() * 10 },
-  ]
-
-  const testCaseData = [
-    { name: 'Validated', value: 0 },
-    { name: 'Not Validated', value: 100 },
-  ]
-
-  const COLORS = ['#FF8042', '#0088FE']
+  const cardStyle = {
+    backgroundColor: 'white',
+    borderRadius: '8px',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+    padding: '20px',
+    marginBottom: '20px',
+  };
 
   return (
-    <div className="min-h-screen bg-blue-100 p-8">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold text-blue-800 mb-4">Session Report</h1>
-        <nav className="bg-blue-500 p-4 rounded-lg">
-          <ul className="flex space-x-4">
-            <li><a href="#about" className="text-white hover:text-blue-200">About</a></li>
-            <li><a href="#demo" className="text-white hover:text-blue-200">Demo</a></li>
-            <li><a href="#explore" className="text-white hover:text-blue-200">Explore</a></li>
+    <div style={{ minHeight: '100vh', backgroundColor: '#EBF5FF', padding: '32px' }}>
+      <header style={{ marginBottom: '32px' }}>
+        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '16px' }}>Session Report</h1>
+        <nav style={{ backgroundColor: '#3B82F6', padding: '16px', borderRadius: '8px' }}>
+          <ul style={{ display: 'flex', gap: '16px' }}>
+            <li><a href="/profile" style={{ color: 'white', textDecoration: 'none' }}>Profile</a></li>
+            <li><a href="/landing" style={{ color: 'white', textDecoration: 'none' }}>Practice Again</a></li>
           </ul>
         </nav>
       </header>
 
-      <div className="mb-8">
-        <button
-          onClick={fetchReportData}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Generate Report
-        </button>
-      </div>
-
-      {loading && <p className="text-blue-800">Loading...</p>}
-      {error && <p className="text-red-500">{error}</p>}
-      {reportGenerated && (
-        <div className="space-y-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <img
-                  src="/placeholder.svg?height=100&width=100"
-                  alt="D.Ashish Ratna"
-                  className="w-24 h-24 rounded-full mb-4"
-                />
-                <h2 className="text-2xl font-bold text-blue-800 mb-2">D.Ashish Ratna</h2>
-                <p className="text-blue-600">Branch: AI & DS</p>
-                <p className="text-blue-600">College: BV RAJU INSTITUTE OF TECHNOLOGY</p>
-                <hr className="my-4" />
-                <p className="font-bold text-blue-800">Interview Session Details:</p>
-                <p className="text-blue-600">Duration: 3 min</p>
-                <p className="text-blue-600">Session ID: 21</p>
-                <p className="text-blue-600">Interviewer Name: Liza</p>
-                <p className="text-blue-600">Date: 26-10-2024</p>
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-blue-800 mb-4">Code Analysis</h2>
-                <p className="text-blue-600"><strong>Code Snippet:</strong> {reportData.code_analysis?.code_snippet || "N/A"}</p>
-                <h3 className="text-xl font-bold text-blue-800 mt-4 mb-2">Structure</h3>
-                <p className="text-blue-600"><strong>Number of Lines:</strong> {reportData.code_analysis?.analysis?.structure?.num_lines || 0}</p>
-                <p className="text-blue-600"><strong>Number of Functions:</strong> {reportData.code_analysis?.analysis?.structure?.num_functions || 0}</p>
-                <p className="text-blue-600"><strong>Average Indentation:</strong> {reportData.code_analysis?.analysis?.structure?.avg_indentation?.toFixed(2) || "N/A"}</p>
-                <h3 className="text-xl font-bold text-blue-800 mt-4 mb-2">Naming Conventions</h3>
-                <p className="text-blue-600"><strong>Number of Camel Case Names:</strong> {reportData.code_analysis?.analysis?.naming_conventions?.num_camel_case || 0}</p>
-                <p className="text-blue-600"><strong>Number of Snake Case Names:</strong> {reportData.code_analysis?.analysis?.naming_conventions?.num_snake_case || 0}</p>
-                <h3 className="text-xl font-bold text-blue-800 mt-4 mb-2">Coding Patterns</h3>
-                <p className="text-blue-600"><strong>Uses List Comprehension:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_list_comprehension ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Uses Lambda:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_lambda ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Uses Decorators:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_decorators ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Uses Docstrings:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_docstrings ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Uses Exception Handling:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_exception_handling ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Uses Classes:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_classes ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Uses Inheritance:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.uses_inheritance ? "Yes" : "No"}</p>
-                <p className="text-blue-600"><strong>Cyclomatic Complexity:</strong> {reportData.code_analysis?.analysis?.coding_patterns?.cyclomatic_complexity || 0}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-blue-800 mb-4">Confidence Analysis</h2>
-            <p className="text-blue-600"><strong>Original Sentence:</strong> {reportData.confidence?.original_sentence}</p>
-            <p className="text-blue-600"><strong>Rewritten Sentence:</strong> {reportData.confidence?.rewritten_sentence}</p>
-            <p className="text-blue-600"><strong>Original Score:</strong> {reportData.confidence?.original_score}</p>
-            <p className="text-blue-600"><strong>Modified Score:</strong> {reportData.confidence?.modified_score}</p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-blue-800 mb-4">Emotion Analysis</h2>
-            <p className="text-blue-600"><strong>Emotion:</strong> {reportData.emotions?.emotion}</p>
-            <p className="text-blue-600"><strong>Emotion Scores:</strong> {JSON.stringify(reportData.emotions?.emotion_scores)}</p>
-          </div>
-
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-2xl font-bold text-blue-800 mb-4">Audio Processing</h2>
-            <p className="text-blue-600"><strong>Transcript:</strong> {reportData.audio_process?.transcript}</p>
-            <p className="text-blue-600"><strong>Confidence:</strong> {reportData.audio_process?.confidence}</p>
-          </div>
-
-          <div className="space-y-8">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-blue-800 mb-4">Facial Emotions</h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={facialEmotionsData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="emotion" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="score" fill="#3B82F6" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-blue-800 mb-4">Audio Analysis</h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={audioAnalysisData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="attribute" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="score" fill="#60A5FA" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="text-2xl font-bold text-blue-800 mb-4">Test Case Validation</h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={testCaseData}
-                    dataKey="value"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={100}
-                    fill="#3B82F6"
-                    label
-                  >
-                    {testCaseData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
+      <div>
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '16px' }}>Interviewee Details</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
+            <div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>D.Ashish Ratna</h3>
+              <p style={{ color: '#3B82F6' }}>Branch: AI & DS</p>
+              <p style={{ color: '#3B82F6' }}>College: BV RAJU INSTITUTE OF TECHNOLOGY</p>
+              <hr style={{ margin: '16px 0', borderColor: '#BFDBFE' }} />
+              <p style={{ fontWeight: 'bold', color: '#1E40AF' }}>Interview Session Details:</p>
+              <p style={{ color: '#3B82F6' }}>Session ID: 21</p>
+              <p style={{ color: '#3B82F6' }}>Interviewer Name: Steve</p>
+              <p style={{ color: '#3B82F6' }}>Date: {new Date().toLocaleDateString()}</p>
             </div>
           </div>
         </div>
-      )}
-    </div>
-  )
-}
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>Your Code</h2>
+          <pre style={{ backgroundColor: '#F1F5F9', padding: '16px', borderRadius: '4px', overflowX: 'auto' }}>
+            {userCode}
+          </pre>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>Code Analysis</h2>
+          {isLoading && <p>Loading code analysis...</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {codeAnalysis && (
+            <div>
+              <p><strong>Number of Classes:</strong> {codeAnalysis.analysis.num_classes[0]}</p>
+              <p><strong>Number of Conditionals:</strong> {codeAnalysis.analysis.num_conditionals}</p>
+              <p><strong>Number of Functions:</strong> {codeAnalysis.analysis.num_functions[0]}</p>
+              <p><strong>Number of Lines:</strong> {codeAnalysis.analysis.num_lines}</p>
+              <p><strong>Number of Loops:</strong> {codeAnalysis.analysis.num_loops}</p>
+              <p><strong>Space Complexity:</strong> {codeAnalysis.analysis.space_complexity}</p>
+              <p><strong>Time Complexity:</strong> {codeAnalysis.analysis.time_complexity}</p>
+              <p><strong>Analysis Timestamp:</strong> {codeAnalysis.timestamp}</p>
+            </div>
+          )}
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>Evaluation Results</h2>
+          <ul style={{ listStyleType: 'none', padding: 0 }}>
+            {evaluationResults?.map((result, index) => (
+              <li key={index} style={{ marginBottom: '16px', backgroundColor: '#F1F5F9', padding: '16px', borderRadius: '4px' }}>
+                <p style={{ fontWeight: 'bold' }}>Test Case {index + 1}:</p>
+                <p>Input: {result.input}</p>
+                <p>Expected Output: {result.expectedOutput}</p>
+                <p>Actual Output: {result.actualOutput}</p>
+                <p>Passed: {result.passed ? 'Yes' : 'No'}</p>
+              </li>
+            ))}
+          </ul>
+          <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#1E40AF', marginTop: '16px' }}>
+            Total Passed Test Cases: {totalPassed}
+          </h3>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>Facial Emotions</h2>
+          <p style={{ color: '#3B82F6', marginBottom: '16px' }}>Emotional analysis based on facial expressions</p>
+          <div style={{ height: '300px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={reportData.facialEmotions}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="emotion" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="score" fill="#3B82F6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>Audio Analysis</h2>
+          <p style={{ color: '#3B82F6', marginBottom: '16px' }}>Analysis of speech attributes</p>
+          <div style={{ height: '300px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={reportData.audioAnalysis}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="attribute" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="score" fill="#3B82F6" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        <div style={cardStyle}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1E40AF', marginBottom: '8px' }}>Test Case Validation</h2>
+          <p style={{ color: '#3B82F6', marginBottom: '16px' }}>Percentage of validated test cases</p>
+          <div style={{ height: '300px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={reportData.testCaseValidation}
+                  dataKey="value"
+                  nameKey="name"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={100}
+                  fill="#8884d8"
+                  label
+                >
+                  {reportData.testCaseValidation.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+    </div> 
+  );
+};
+
+export default SessionReport;

@@ -4,19 +4,19 @@ import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, L
 
 // Sample data for the charts
 const growthData = [
-  { date: '2023-10-01', score: 89 },
-  { date: '2023-10-02', score: 81 },
-  { date: '2023-10-03', score: 51 },
-  { date: '2023-10-04', score: 35 },
-  { date: '2023-10-05', score: 72 },
+  { date: '2024-10-18', score: 89 },
+  { date: '2024-10-20', score: 81 },
+  { date: '2024-10-22', score: 51 },
+  { date: '2024-10-24', score: 35 },
+  { date: '2024-10-26', score: 72 },
 ]
 
 const performanceData = [
-  { date: '2023-10-01', score: 28 },
-  { date: '2023-10-02', score: 26 },
-  { date: '2023-10-03', score: 24 },
-  { date: '2023-10-04', score: 10 },
-  { date: '2023-10-05', score: 18 },
+  { date: '2024-10-18', score: 28 },
+  { date: '2024-10-20', score: 26 },
+  { date: '2024-10-22', score: 24 },
+  { date: '2024-10-24', score: 10 },
+  { date: '2024-10-26', score: 18 },
 ]
 
 export default function ProfilePage() {
