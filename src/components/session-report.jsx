@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-
+const cors = require('cors');
 const COLORS = ['#3B82F6', '#1D4ED8']; // Blue shades
 
 const SessionReport = () => {
@@ -19,20 +19,39 @@ const SessionReport = () => {
       setIsLoading(true);
       setError(null);
       try {
-        const response = await axios.post('https://codeana.onrender.com/analyze_code', { code: userCode });
+        const response = await axios.post(
+          'https://codeana.onrender.com/analyze_code',
+          { code_snippet: userCode },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              // Add other headers if needed
+            },
+          }
+        );
+  
+        if (!response.data || Object.keys(response.data).length === 0) {
+          throw new Error('Empty response from the server');
+        }
+  
         setCodeAnalysis(response.data);
       } catch (err) {
-        setError('Failed to fetch code analysis');
+        setError(err.message || 'Failed to fetch code analysis');
         console.error('Error fetching code analysis:', err);
       } finally {
         setIsLoading(false);
       }
     };
-
+  
     if (userCode) {
-      fetchCodeAnalysis();
+      const timeoutId = setTimeout(() => {
+        fetchCodeAnalysis();
+      }, 500); // Debounce API calls
+  
+      return () => clearTimeout(timeoutId); // Cleanup timeout
     }
   }, [userCode]);
+  
 
   const reportData = {
     facialEmotions: [

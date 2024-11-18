@@ -293,6 +293,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
   
       // Combine results and question data for the session report
       const sessionData = {
+        userCode,
         evaluationResults,
         totalPassed,
         nextQuestion: randomQuestion,  // Include full question data
