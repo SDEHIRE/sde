@@ -389,7 +389,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
 
 
 
-
+  
 
 
 
@@ -517,7 +517,11 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
 
 
   return (
+
+    
+    
     <div className="min-h-screen bg-blue-100">
+      
       {showInstructions && <InstructionsModal onClose={closeInstructions} />}
 
       <header className="bg-blue-600 text-white p-4">
@@ -526,6 +530,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
           <h2 className="text-2xl font-bold">Level 1 - Guided Practice</h2>
         </div>
       </header>
+      
 
       <main className="container mx-auto p-4 md:flex md:space-x-4">
         <div className="md:w-1/2 space-y-4">
@@ -534,7 +539,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
             <div className="flex items-start space-x-4">
               <div className="w-1/3">
                 <div className="text-center mb-2">
-                  <h4 className="font-semibold">Lisa</h4>
+                  <h4 className="font-semibold">Steve</h4>
                   <p>AI Interviewer</p>
                 </div>
                 <div className="video-container">
@@ -547,6 +552,7 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
     <source src="l2.mp4" type="video/mp4" />
     Your browser does not support the video tag.
   </video>
+  
 </div>
                  </div>
               
@@ -632,6 +638,11 @@ if (window.speechSynthesis.onvoiceschanged !== undefined) {
           </button>
         </div>
       </footer>
+      
     </div>
+    
+  
+    
   )
+  
 }

@@ -55,17 +55,17 @@ const SessionReport = () => {
 
   const reportData = {
     facialEmotions: [
-      { emotion: "Happy", score: 75 },
+      { emotion: "Happy", score: Math.random() * 10},
       { emotion: "Sad", score: 25 },
-      { emotion: "Angry", score: 10 },
+      { emotion: "Angry", score: Math.random() * 10},
       { emotion: "Fear", score: 5 },
       { emotion: "Surprise", score: 40 },
     ],
     audioAnalysis: [
-      { attribute: "Clarity", score: 8 },
+      { attribute: "Clarity", score: Math.random() * 10 },
       { attribute: "Volume", score: 7 },
       { attribute: "Speed", score: 6 },
-      { attribute: "Tone", score: 9 },
+      { attribute: "Tone", score: Math.random() * 10},
     ],
     testCaseValidation: [
       { name: "Validated", value: totalPassed || 0 },

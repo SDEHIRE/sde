@@ -42,7 +42,7 @@ export default function ProfilePage() {
   }
 
   const handleGuidedPracticeClick = () => {
-    navigate('/guided-practice')
+    navigate('/ComingSoon')
   }
 
   return (
